@@ -1,0 +1,51 @@
+Author: Panagiotis Voulgaris
+(pvoulgar@cs.ucsd.edu, p.voulg@gmail.com)
+
+Gauss Sieve -- Alpha Release
+
+
+Files
+-----
+common.[cc,h]:	Common functions needed by gsieve and sampler
+sampler.[cc,h]:	Class to sample points based on:
+	"Trapdoors for Hard Lattices and New Cryptographic Constructions"
+	Craig Gentry, Chris Peikert, Vinod Vaikuntanathan
+gsieve.[cc,h]:	Implementation of Gauss Sieve based on:
+	"Faster exponential time algorithms for the shortest vector problem"
+	Daniele Micciancio, Panagiotis Voulgaris
+gsieve_main.cc:	Main function to call Gauss Sieve.
+generate_main.cc:
+		Generate knapsack like basis.
+
+Example
+-------
+make clean
+make
+./bin/generate 45 > test.bas # Generates a 45-dim Knapsack with 450-bit numbers.
+./bin/gsieve -f test.bas -v # Runs verbose Gauss Sieve on file test.bas.
+
+Comments
+--------
+1. If you find bugs, or you have comments, suggestions etc... Please contact me!
+
+2. The current implementation of Gauss Sieve is using 64-bit integers
+*NOT arbitrary precision*. As a result the basis should be pre-reduced with
+LLL, BKZ-20 etc. Also this means that it would take a performance hit in older
+32-bit machines.
+
+3. gsieve_main is doing BKZ-20 before applying Gauss Sieve. Feel free to change
+the pre-reduction to anything you'd like.
+
+4. Some techniques to make the algorithm faster that are not fully described on
+the paper:
+
+a. Every new point is first reduced with list points of shorter norm. Then it
+is used to reduce the remaining points of larger norms.
+
+b. The list is sorted from shorter to larger points. This is done first to apply
+(a) easier, secondly because the shorter points can reduce more points than
+larger points. So we should use them first to reduce the norm as fast as
+possible.
+
+c. To make things faster we always keep the norm of each point. (There is a
+struct ListPoint that compines a point and its norm.)
