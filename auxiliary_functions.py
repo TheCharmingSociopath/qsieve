@@ -93,7 +93,7 @@ def resources(D, C, M, case = 'NVSieve'):
 	if M == 0:
 		grover_iterations = mp.ceil(9.2 * mp.log(1/delta, 3) * mp.sqrt(C))
 	else:
-		grover_iterations = mp.ceil(7.67 * mp.sqrt(C/M))
+		grover_iterations = mp.ceil(3.1 * mp.sqrt(C/M))
 
 
 	if case == 'NVSieve':
@@ -189,7 +189,7 @@ def resources_no_qram(D, C, M, case = 'NVSieve'):
 	if M == 0:
 		grover_iterations = mp.ceil(9.2 * mp.log(1/delta, 3) * mp.sqrt(C))
 	else:
-		grover_iterations = mp.ceil(7.67 * mp.sqrt(C/M))
+		grover_iterations = mp.ceil(3.1 * mp.sqrt(C/M))
 
 
 	if case == 'NVSieve':
@@ -300,7 +300,7 @@ def resources_nist(D, C, M, I, case = 'NVSieve'):
 	if M == 0:
 		grover_iterations = mp.ceil(9.2 * mp.log(1/delta, 3) * mp.sqrt(C))
 	else:
-		grover_iterations = mp.ceil(7.67 * mp.sqrt(C/M))
+		grover_iterations = mp.ceil(3.1 * mp.sqrt(C/M))
 
 	if case == 'NVSieve':
 	

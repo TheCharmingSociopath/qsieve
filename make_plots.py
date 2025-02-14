@@ -7,9 +7,8 @@ import scienceplots
 
 plt.style.use('science')
 
-#dimensions = [10*i + 50 for i in range(46)]
-dimensions = [10*i + 100 for i in range(41)]
-dimensions2 = [10*i + 400 for i in range(11)]
+dimensions = [20*i + 100 for i in range(46)]
+dimensions2 = [20*i + 400 for i in range(6)]
 limits = range(40,72)
 
 heuristics = {
@@ -251,7 +250,7 @@ comparison = {
 for sieve in ['NVSieve_plain', 'NVSieve_angular', 'NVSieve_spherical', 'NVSieve_filter', 'GaussSieve_plain', 'GaussSieve_angular', 'GaussSieve_spherical', 'GaussSieve_filter']:
 	for condition in ['', '_no_qram', '_nist']:
 
-		with open('data/heuristics_'+sieve+condition+'.txt', "r") as data_file:
+		with open('data/heuristics/heuristics_'+sieve+condition+'.txt', "r") as data_file:
 			for line in data_file:
 		    		if 'physical_qubits_baseline' in line:
 		    			string = 'physical_qubits_baseline'
@@ -267,7 +266,7 @@ for sieve in ['NVSieve_plain', 'NVSieve_angular', 'NVSieve_spherical', 'NVSieve_
 		    			string = 'hashing_time'
 		    		elif 'classical_time' in line:
 		    			string = 'classical_time'
-		    		elif float((line.strip('\n').split(" "))[0]) >= 100:
+		    		else:
 		    			heuristics[sieve+condition][string].append( float((line.strip('\n').split(" "))[1]) )
 	 
 
@@ -278,7 +277,7 @@ for sieve in ['NVSieve_plain', 'NVSieve_angular', 'NVSieve_spherical', 'NVSieve_
 		plt.plot(dimensions, heuristics[sieve+condition]['physical_qubits_baseline'], label='Baseline')
 		plt.plot(dimensions, heuristics[sieve+condition]['physical_qubits_active'], label='Active-volume')
 		plt.yscale("log")
-		plt.xlim([50,500])
+		plt.xlim([100,1000])
 		ax1.tick_params(axis='x', labelsize=13)
 		ax1.tick_params(axis='y', labelsize=14)
 		plt.xlabel('Dimension $D$', fontsize=13)
@@ -290,11 +289,11 @@ for sieve in ['NVSieve_plain', 'NVSieve_angular', 'NVSieve_spherical', 'NVSieve_
 			plt.title('GaussSieve', fontsize=13)
 			
 		if condition == '_no_qram':
-			plt.savefig('plots/heuristics_extra/without_qram/heuristics_'+sieve+'_physical_qubits.png', bbox_inches='tight')
+			plt.savefig('plots/heuristics_extra/without_qram/heuristics_'+sieve+'_physical_qubits.eps', format='eps', bbox_inches='tight')
 		elif condition == '_nist':
-			plt.savefig('plots/heuristics_extra/nist/heuristics_'+sieve+'_physical_qubits.png', bbox_inches='tight')
+			plt.savefig('plots/heuristics_extra/nist/heuristics_'+sieve+'_physical_qubits.eps', format='eps', bbox_inches='tight')
 		else:
-			plt.savefig('plots/heuristics_extra/with_qram/heuristics_'+sieve+'_physical_qubits.png', bbox_inches='tight')
+			plt.savefig('plots/heuristics_extra/with_qram/heuristics_'+sieve+'_physical_qubits.eps', format='eps', bbox_inches='tight')
 			
 		plt.close()
 
@@ -307,7 +306,7 @@ for sieve in ['NVSieve_plain', 'NVSieve_angular', 'NVSieve_spherical', 'NVSieve_
 		plt.plot(dimensions, heuristics[sieve+condition]['reaction_limit'], label='Reaction limit')
 		plt.plot(dimensions, heuristics[sieve+condition]['hashing_time'], label='Classical hashing')
 		plt.yscale("log")
-		plt.xlim([50,500])
+		plt.xlim([100,1000])
 		ax1.tick_params(axis='x', labelsize=13)
 		ax1.tick_params(axis='y', labelsize=14)
 		plt.xlabel('Dimension $D$', fontsize=13)
@@ -319,11 +318,11 @@ for sieve in ['NVSieve_plain', 'NVSieve_angular', 'NVSieve_spherical', 'NVSieve_
 			plt.title('GaussSieve', fontsize=13)
 			
 		if condition == '_no_qram':
-			plt.savefig('plots/heuristics_extra/without_qram/heuristics_'+sieve+'_quantum_time.png', bbox_inches='tight')
+			plt.savefig('plots/heuristics_extra/without_qram/heuristics_'+sieve+'_quantum_time.eps', format='eps', bbox_inches='tight')
 		elif condition == '_nist':
-			plt.savefig('plots/heuristics_extra/nist/heuristics_'+sieve+'_quantum_time.png', bbox_inches='tight')
+			plt.savefig('plots/heuristics_extra/nist/heuristics_'+sieve+'_quantum_time.eps', format='eps', bbox_inches='tight')
 		else:
-			plt.savefig('plots/heuristics_extra/with_qram/heuristics_'+sieve+'_quantum_time.png', bbox_inches='tight')
+			plt.savefig('plots/heuristics_extra/with_qram/heuristics_'+sieve+'_quantum_time.eps', format='eps', bbox_inches='tight')
 
 		plt.close()
 		
@@ -335,7 +334,7 @@ for sieve in ['NVSieve_plain', 'NVSieve_angular', 'NVSieve_spherical', 'NVSieve_
 		plt.plot(dimensions, [x + y for x, y in zip(heuristics[sieve+condition]['time_active'], heuristics[sieve+condition]['hashing_time'])], label='Active-volume')
 		plt.plot(dimensions, [x + y for x, y in zip(heuristics[sieve+condition]['reaction_limit'], heuristics[sieve+condition]['hashing_time'])], label='Reaction limit')
 		plt.yscale("log")
-		plt.xlim([50,500])
+		plt.xlim([100,1000])
 		ax1.tick_params(axis='x', labelsize=13)
 		ax1.tick_params(axis='y', labelsize=14)
 		plt.xlabel('Dimension $D$', fontsize=13)
@@ -347,18 +346,18 @@ for sieve in ['NVSieve_plain', 'NVSieve_angular', 'NVSieve_spherical', 'NVSieve_
 			plt.title('GaussSieve', fontsize=13)
 			
 		if condition == '_no_qram':
-			plt.savefig('plots/heuristics_extra/without_qram/heuristics_'+sieve+'_total_time.png', bbox_inches='tight')
+			plt.savefig('plots/heuristics_extra/without_qram/heuristics_'+sieve+'_total_time.eps', format='eps', bbox_inches='tight')
 		elif condition == '_nist':
-			plt.savefig('plots/heuristics_extra/nist/heuristics_'+sieve+'_total_time.png', bbox_inches='tight')
+			plt.savefig('plots/heuristics_extra/nist/heuristics_'+sieve+'_total_time.eps', format='eps', bbox_inches='tight')
 		else:
-			plt.savefig('plots/heuristics_extra/with_qram/heuristics_'+sieve+'_total_time.png', bbox_inches='tight')
+			plt.savefig('plots/heuristics_extra/with_qram/heuristics_'+sieve+'_total_time.eps', format='eps', bbox_inches='tight')
 
 		plt.close()
 	
 
 #######################################################################################################
 
-with open('data/simulations_GaussSieve.txt', "r") as data_file:
+with open('data/simulations/simulations_GaussSieve.txt', "r") as data_file:
 	for line in data_file:
     		if 'physical_qubits_baseline' in line:
     			string = 'physical_qubits_baseline'
@@ -427,7 +426,7 @@ for sieve in ['NVSieve', 'GaussSieve']:
 			plt.plot(dimensions, heuristics[sieve+'_filter'+condition][resource], label='Spherical LSF', color='red', linestyle=style)
 			plt.yscale("log")
 			plt.gca().yaxis.set_ticks_position('both')
-			plt.xlim([100,500])
+			plt.xlim([100,1000])
 			ax1.tick_params(axis='x', labelsize=13)
 			ax1.tick_params(axis='y', labelsize=14)
 			plt.xlabel('Dimension $D$', fontsize=13)
@@ -442,11 +441,11 @@ for sieve in ['NVSieve', 'GaussSieve']:
 	
 			plt.legend(frameon=True)
 			if condition == '_no_qram':
-				plt.savefig('plots/heuristics/without_qram/'+resource+'_'+sieve+condition+'.png', bbox_inches='tight')
+				plt.savefig('plots/heuristics/without_qram/'+resource+'_'+sieve+condition+'.eps', format='eps', bbox_inches='tight')
 			elif condition == '_nist':
-				plt.savefig('plots/heuristics/nist/'+resource+'_'+sieve+condition+'.png', bbox_inches='tight')
+				plt.savefig('plots/heuristics/nist/'+resource+'_'+sieve+condition+'.eps', format='eps', bbox_inches='tight')
 			else:
-				plt.savefig('plots/heuristics/with_qram/'+resource+'_'+sieve+condition+'.png', bbox_inches='tight')
+				plt.savefig('plots/heuristics/with_qram/'+resource+'_'+sieve+condition+'.eps', format='eps', bbox_inches='tight')
 				
 			plt.close()
 		
@@ -467,7 +466,7 @@ for sieve in ['NVSieve', 'GaussSieve']:
 			plt.plot(dimensions, [x + y for x, y in zip(heuristics[sieve+'_filter'+condition][resource], heuristics[sieve+'_filter']['hashing_time'])], label='Spherical LSF (quantum)', color='red', linestyle=style)
 			plt.yscale("log")
 			plt.gca().yaxis.set_ticks_position('both')
-			plt.xlim([100,500])
+			plt.xlim([100,1000])
 			ax1.tick_params(axis='x', labelsize=13)
 			ax1.tick_params(axis='y', labelsize=14)
 			plt.xlabel('Dimension $D$', fontsize=13)
@@ -484,11 +483,11 @@ for sieve in ['NVSieve', 'GaussSieve']:
 			
 			plt.legend(frameon=True)				
 			if condition == '_no_qram':
-				plt.savefig('plots/heuristics/without_qram/'+resource+'_'+sieve+condition+'.png', bbox_inches='tight')
+				plt.savefig('plots/heuristics/without_qram/'+resource+'_'+sieve+condition+'.eps', format='eps', bbox_inches='tight')
 			elif condition == '_nist':
-				plt.savefig('plots/heuristics/nist/'+resource+'_'+sieve+condition+'.png', bbox_inches='tight')
+				plt.savefig('plots/heuristics/nist/'+resource+'_'+sieve+condition+'.eps', format='eps', bbox_inches='tight')
 			else:
-				plt.savefig('plots/heuristics/with_qram/'+resource+'_'+sieve+condition+'.png', bbox_inches='tight')
+				plt.savefig('plots/heuristics/with_qram/'+resource+'_'+sieve+condition+'.eps', format='eps', bbox_inches='tight')
 			
 			plt.close()
 		
@@ -512,17 +511,18 @@ for sieve in ['NVSieve', 'GaussSieve']:
 		ax2 = fig.add_axes([0.03, 0.8, 0.68, 0.68])
 		ax2.grid(color='k', linestyle='--', linewidth=0.5)
 		
-		ax2.plot(dimensions2, [heuristics[sieve+'_plain'][resource][i] + heuristics[sieve+'_plain']['hashing_time'][i] for i in range(30,41)], label='No LSH/LSF (quantum)', color='orange', linestyle='solid')
-		ax2.plot(dimensions2, [heuristics[sieve+'_plain']['classical_time'][i] for i in range(30,41)], label='No LSH/LSF (classical)', color='orange', linestyle='dashed')
-		ax2.plot(dimensions2, [heuristics[sieve+'_angular'][resource][i] + heuristics[sieve+'_plain']['hashing_time'][i] for i in range(30,41)], label='Angular LSH (quantum)', color='blue', linestyle='solid')
-		ax2.plot(dimensions2, [heuristics[sieve+'_angular']['classical_time'][i] for i in range(30,41)], label='Angular LSH (classical)', color='blue', linestyle='dashed')
-		ax2.plot(dimensions2, [heuristics[sieve+'_spherical'][resource][i] + heuristics[sieve+'_plain']['hashing_time'][i] for i in range(30,41)], label='Spherical LSH (quantum)', color='green', linestyle='solid')
-		ax2.plot(dimensions2, [heuristics[sieve+'_spherical']['classical_time'][i] for i in range(30,41)], label='Spherical LSH (classical)', color='green', linestyle='dashed')
-		ax2.plot(dimensions2, [heuristics[sieve+'_filter'][resource][i] + heuristics[sieve+'_plain']['hashing_time'][i] for i in range(30,41)], label='Spherical LSF (quantum)', color='red', linestyle='solid')
-		ax2.plot(dimensions2, [heuristics[sieve+'_filter']['classical_time'][i] for i in range(30,41)], label='Spherical LSF (classical)', color='red', linestyle='dashed')
+		ax2.plot(dimensions2, [heuristics[sieve+'_plain'][resource][i] + heuristics[sieve+'_plain']['hashing_time'][i] for i in range(14,20)], label='No LSH/LSF (quantum)', color='orange', linestyle='solid')
+		ax2.plot(dimensions2, [heuristics[sieve+'_plain']['classical_time'][i] for i in range(14,20)], label='No LSH/LSF (classical)', color='orange', linestyle='dashed')
+		ax2.plot(dimensions2, [heuristics[sieve+'_angular'][resource][i] + heuristics[sieve+'_plain']['hashing_time'][i] for i in range(14,20)], label='Angular LSH (quantum)', color='blue', linestyle='solid')
+		ax2.plot(dimensions2, [heuristics[sieve+'_angular']['classical_time'][i] for i in range(14,20)], label='Angular LSH (classical)', color='blue', linestyle='dashed')
+		ax2.plot(dimensions2, [heuristics[sieve+'_spherical'][resource][i] + heuristics[sieve+'_plain']['hashing_time'][i] for i in range(14,20)], label='Spherical LSH (quantum)', color='green', linestyle='solid')
+		ax2.plot(dimensions2, [heuristics[sieve+'_spherical']['classical_time'][i] for i in range(14,20)], label='Spherical LSH (classical)', color='green', linestyle='dashed')
+		ax2.plot(dimensions2, [heuristics[sieve+'_filter'][resource][i] + heuristics[sieve+'_plain']['hashing_time'][i] for i in range(14,20)], label='Spherical LSF (quantum)', color='red', linestyle='solid')
+		ax2.plot(dimensions2, [heuristics[sieve+'_filter']['classical_time'][i] for i in range(14,20)], label='Spherical LSF (classical)', color='red', linestyle='dashed')
 		
 		ax1.set_xlabel('Dimension $D$', fontsize=13)
 		ax1.set_yscale("log")
+
 		ax1.tick_params(axis='x', labelsize=13)
 		ax1.tick_params(axis='y', labelsize=14)
 		ax2.tick_params(axis='x', labelsize=10)
@@ -530,9 +530,9 @@ for sieve in ['NVSieve', 'GaussSieve']:
 		ax2.set_yscale("log")
 		ax2.yaxis.tick_right()
 #		plt.gca().yaxis.set_ticks_position('both')
-		ax1.set_xlim(100,500)
+		ax1.set_xlim(100,1000)
 		ax2.set_xlim(400,500)
-		ax2.set_ylim(None, 10*heuristics[sieve+'_angular']['classical_time'][40])
+		ax2.set_ylim(None, 2*heuristics[sieve+'_angular']['classical_time'][19])
 		ax1.set_title(sieve, fontsize=13)
 		
 		if resource == 'time_baseline':
@@ -542,10 +542,11 @@ for sieve in ['NVSieve', 'GaussSieve']:
 			ax1.set_ylabel('Active-volume time (years)', fontsize=13)			
 			
 		elif resource == 'reaction_limit':
+			ax1.tick_params(labelright=True)
 			ax1.set_ylabel('Reaction limit (years)', fontsize=13)
 		
 		ax1.legend(loc=4, fontsize=9.5, frameon=True)
-		plt.savefig('plots/heuristics/with_qram/'+resource+'_'+sieve+'_complete.png', bbox_inches='tight')
+		plt.savefig('plots/heuristics/with_qram/'+resource+'_'+sieve+'_complete.eps', format='eps', bbox_inches='tight')
 		
 		plt.close()
 
@@ -568,7 +569,7 @@ plt.gca().yaxis.set_ticks_position('both')
 plt.xlabel('Dimension $D$', fontsize=13)
 plt.ylabel('Physical qubits', fontsize=13)
 plt.legend(frameon=True, fontsize=11)
-plt.savefig('plots/comparison/comparison_physical_qubits_active.png', bbox_inches='tight')
+plt.savefig('plots/comparison/comparison_physical_qubits_active.eps', format='eps', bbox_inches='tight')
 plt.close()
 
 #plt.rcParams.update({'font.size': 12})
@@ -590,7 +591,7 @@ plt.gca().yaxis.set_ticks_position('both')
 plt.xlabel('Dimension $D$', fontsize=13)
 plt.ylabel('Time (days)', fontsize=13)
 plt.legend(frameon=True, fontsize=10.5)
-plt.savefig('plots/comparison/comparison_time.png', bbox_inches='tight')
+plt.savefig('plots/comparison/comparison_time.eps', format='eps', bbox_inches='tight')
 plt.close()
 
 #######################################################################################################
@@ -605,7 +606,7 @@ plt.plot(dimensions, heuristics['GaussSieve_spherical']['physical_qubits_active'
 plt.plot(dimensions, heuristics['GaussSieve_filter']['physical_qubits_active'], label='Spherical LSF', color='red', linestyle='solid')
 plt.yscale("log")
 plt.gca().yaxis.set_ticks_position('both')
-plt.xlim(200,500)
+plt.xlim(200,1000)
 #plt.ylim(0.9*10**9, None)
 #plt.tick_params(labelright=True)
 plt.xlabel('Dimension $D$', fontsize=13)
@@ -614,7 +615,7 @@ ax1.tick_params(axis='x', labelsize=13)
 ax1.tick_params(axis='y', labelsize=14)
 plt.legend(frameon=True, fontsize=13)
 plt.title('GaussSieve', fontsize=13)
-plt.savefig('plots/heuristics/with_qram/GaussSieve_physical_qubits_introduction.png', bbox_inches='tight')
+plt.savefig('plots/heuristics/with_qram/GaussSieve_physical_qubits_introduction.eps', format='eps', bbox_inches='tight')
 plt.close()
 
 
@@ -634,12 +635,12 @@ ax1.plot(dimensions, heuristics['GaussSieve_filter']['classical_time'], label='S
 
 ax2 = fig.add_axes([0.04, 0.8, 0.65, 0.65])
 ax2.grid(color='k', linestyle='--', linewidth=0.5)
-ax2.plot(dimensions2, [heuristics['GaussSieve_angular']['reaction_limit'][i] + heuristics['GaussSieve_angular']['hashing_time'][i] for i in range(30,41)], label='Angular LSH (quantum)', color='blue', linestyle='solid')
-ax2.plot(dimensions2, [heuristics['GaussSieve_angular']['classical_time'][i] for i in range(30,41)], label='Angular LSH (classical)', color='blue', linestyle='dashed')
-ax2.plot(dimensions2, [heuristics['GaussSieve_spherical']['reaction_limit'][i] + heuristics['GaussSieve_plain']['hashing_time'][i] for i in range(30,41)], label='Spherical LSH (quantum)', color='green', linestyle='solid')
-ax2.plot(dimensions2, [heuristics['GaussSieve_spherical']['classical_time'][i] for i in range(30,41)], label='Spherical LSH (classical)', color='green', linestyle='dashed')
-ax2.plot(dimensions2, [heuristics['GaussSieve_filter']['reaction_limit'][i] + heuristics['GaussSieve_plain']['hashing_time'][i] for i in range(30,41)], label='Spherical LSF (quantum)', color='red', linestyle='solid')
-ax2.plot(dimensions2, [heuristics['GaussSieve_filter']['classical_time'][i] for i in range(30,41)], label='Spherical LSF (classical)', color='red', linestyle='dashed')
+ax2.plot(dimensions2, [heuristics['GaussSieve_angular']['reaction_limit'][i] + heuristics['GaussSieve_angular']['hashing_time'][i] for i in range(14,20)], label='Angular LSH (quantum)', color='blue', linestyle='solid')
+ax2.plot(dimensions2, [heuristics['GaussSieve_angular']['classical_time'][i] for i in range(14,20)], label='Angular LSH (classical)', color='blue', linestyle='dashed')
+ax2.plot(dimensions2, [heuristics['GaussSieve_spherical']['reaction_limit'][i] + heuristics['GaussSieve_plain']['hashing_time'][i] for i in range(14,20)], label='Spherical LSH (quantum)', color='green', linestyle='solid')
+ax2.plot(dimensions2, [heuristics['GaussSieve_spherical']['classical_time'][i] for i in range(14,20)], label='Spherical LSH (classical)', color='green', linestyle='dashed')
+ax2.plot(dimensions2, [heuristics['GaussSieve_filter']['reaction_limit'][i] + heuristics['GaussSieve_plain']['hashing_time'][i] for i in range(14,20)], label='Spherical LSF (quantum)', color='red', linestyle='solid')
+ax2.plot(dimensions2, [heuristics['GaussSieve_filter']['classical_time'][i] for i in range(14,20)], label='Spherical LSF (classical)', color='red', linestyle='dashed')
 ax1.set_yscale("log")
 ax1.tick_params(axis='x', labelsize=13)
 ax1.tick_params(axis='y', labelsize=14)
@@ -648,12 +649,12 @@ ax2.tick_params(axis='y', labelsize=11)
 ax2.set_yscale("log")
 ax2.yaxis.tick_right()
 #plt.gca().yaxis.set_ticks_position('both')
-ax1.set_xlim(200,500)
+ax1.set_xlim(200,1000)
 ax2.set_xlim(400,500)
 ax1.set_ylim(10**9, None)
-ax2.set_ylim(None, 6*heuristics['GaussSieve_angular']['classical_time'][40])
+ax2.set_ylim(None, 2*heuristics['GaussSieve_angular']['classical_time'][19])
 ax1.legend(loc=4, fontsize=12.5, frameon=True)
-plt.savefig('plots/heuristics/with_qram/GaussSieve_reaction_limit_introduction.png', bbox_inches='tight')
+plt.savefig('plots/heuristics/with_qram/GaussSieve_reaction_limit_introduction.eps', format='eps', bbox_inches='tight')
 #plt.show()
 plt.close()
 

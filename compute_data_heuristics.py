@@ -6,7 +6,7 @@ import os
 
 mp.dps = 50
 classical_clock_rate = 6 * mp.power(10,9) * 3600 * 24 * 365
-dimensions = [10*i + 100 for i in range(41)]
+dimensions = [20*i + 100 for i in range(46)]
 
 resources = {
 	'NVSieve_plain': {

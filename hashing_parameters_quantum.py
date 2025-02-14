@@ -4,7 +4,7 @@ import os
 import auxiliary_functions as aux
 
 mp.dps = 30
-dimensions = [10*i + 100 for i in range(41)]
+dimensions = [20*i + 100 for i in range(46)]
 
 
 #for sieve in ['NVSieve_spherical', 'GaussSieve_spherical']:
@@ -51,7 +51,7 @@ for sieve in ['GaussSieve_filter']:
 				mp.dps = D/5 + 25
 				L = mp.ceil(mp.power(2, 0.193*D + 2.325))
 				I = mp.ceil(mp.power(2, 0.283*D + 0.335))
-				t_angular = mp.findroot(lambda t: I * I / L * aux.p2_angular(t, D) - mp.power(aux.k_angular(t) * t / D, 2), 10*D*mp.power(2, 0.078430*D), verify=False)
+				t_angular = mp.findroot(lambda t: I * I / L * aux.p2_angular(t, D) - mp.power(aux.k_angular(t) * t / D, 2), 100*D*D*mp.power(2, 0.1*D), verify=False)
 				print('D:', D)
 				print('Angular Error p2:', I * I / L * aux.p2_angular(t_angular, D) - mp.power(aux.k_angular(t_angular) * t_angular / D, 2))
 				data_file.write(str( t_angular ))
@@ -60,7 +60,7 @@ for sieve in ['GaussSieve_filter']:
 				mp.dps = D/5 + 15
 				L = mp.ceil(mp.power(2, 0.193*D + 2.325))
 				I = mp.ceil(mp.power(2, 0.283*D + 0.335))
-				t_spherical = mp.findroot(lambda t: I * I / L * aux.p2_spherical(t, D) - mp.power(mp.power(2, mp.sqrt(D)) * aux.k_spherical(t, D) * t, 2), 2*mp.power(2, 0.054*D), verify=False)
+				t_spherical = mp.findroot(lambda t: I * I / L * aux.p2_spherical(t, D) - mp.power(mp.power(2, mp.sqrt(D)) * aux.k_spherical(t, D) * t, 2), 10*D*D*mp.power(2, 0.06*D), verify=False)
 				print('D:', D)
 				print('Spherical Error p2:', I * I / L * aux.p2_spherical(t_spherical, D) - mp.power(mp.power(2, mp.sqrt(D)) * aux.k_spherical(t_spherical, D) * t_spherical, 2) )
 				data_file.write(str( t_spherical ))
